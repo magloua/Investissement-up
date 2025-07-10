@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>InvestSecureFinance - Plateforme d'investissement sécurisée</title>
+  <style>
+    /* Reset basique */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+    }
+    body {
+      background: #f7f9fc;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #004d99;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 1px;
+    }
+    nav {
+      margin-top: 0.5rem;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+    nav a:hover {
+      color: #ffd700;
+    }
+
+    main {
+      flex: 1;
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    section {
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin-bottom: 1rem;
+      color: #004d99;
+      border-bottom: 2px solid #004d99;
+      padding-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .plans {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .plan {
+      flex: 1 1 250px;
+      border: 2px solid #004d99;
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      transition: box-shadow 0.3s ease;
+      cursor: pointer;
+      background: #e6f0ff;
+    }
+    .plan:hover {
+      box-shadow: 0 0 15px #004d99;
+    }
+
+    .plan h3 {
+      margin-bottom: 0.5rem;
+      color: #003366;
+    }
+    .plan .amount {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #0073e6;
+    }
+    .plan .return {
+      font-style: italic;
+      color: #004d99;
+    }
+
+    footer {
+      background-color: #00264d;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      margin-top: auto;
+    }
+
+    /* Modal simple */
+    #modal {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0,0,0,0.6);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    #modal.active {
+      display: flex;
+    }
+    #modal-content {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      text-align: center;
+      position: relative;
+    }
+    #modal-content h3 {
+      margin-bottom: 1rem;
+      color: #004d99;
+    }
+    #modal-content button {
+      background-color: #004d99;
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    #modal-content button:hover {
+      background-color: #003366;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>InvestSecureFinance</h1>
+    <nav>
+      <a href="#about">À propos</a>
+      <a href="#plans">Investir</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>À propos de nous</h2>
+      <p>InvestSecureFinance est une plateforme d'investissement sécurisée et réglementée, créée en 2018.  
+      Basée à Londres, notre équipe d’experts financiers a plus de 20 ans d’expérience dans la gestion de portefeuilles et le trading.</p>
+      <p>Nous offrons des rendements attractifs, stables et garantis, avec un support client dédié 24/7.</p>
+    </section>
+
+    <section id="plans">
+      <h2>Nos plans d’investissement</h2>
+      <div class="plans">
+        <div class="plan" data-plan="basic">
+          <h3>Plan Basique</h3>
+          <div class="amount">1000 €</div>
+          <div class="return">Rendement garanti 10% / mois</div>
+        </div>
+        <div class="plan" data-plan="standard">
+          <h3>Plan Standard</h3>
+          <div class="amount">3000 €</div>
+          <div class="return">Rendement garanti 12% / mois</div>
+        </div>
+        <div class="plan" data-plan="premium">
+          <h3>Plan Premium</h3>
+          <div class="amount">5000 €</div>
+          <div class="return">Rendement garanti 15% / mois</div>
+        </div>
+      </div>
+      <p style="margin-top: 1rem; font-style: italic; color: #666;">Cliquez sur un plan pour simuler votre gain sur 6 mois.</p>
+      <div id="simulation" style="margin-top: 1rem; font-weight: 700; font-size: 1.2rem;"></div>
+    </section>
+
+    <section id="contact">
+      <h2>Contactez-nous</h2>
+      <p>Pour toute question, écrivez-nous à : <a href="mailto:invest.support@investsecurefinance.com">invest.support@investsecurefinance.com</a></p>
+      <p>Ou appelez-nous au : +44 20 7946 0958</p>
+      <form id="contactForm" style="max-width: 400px; margin-top: 1rem;">
+        <label for="name">Nom :</label><br />
+        <input type="text" id="name" name="name" required style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem;" />
+        <label for="email">Email :</label><br />
+        <input type="email" id="email" name="email" required style="width: 100%; padding: 0.5rem; margin-bottom: 0.5rem;" />
+        <label for="message">Message :</label><br />
+        <textarea id="message" name="message" required rows="4" style="width: 100%; padding: 0.5rem;"></textarea><br />
+        <button type="submit" style="margin-top: 0.5rem; background-color:#004d99; color:white; border:none; padding:0.7rem 1.5rem; cursor:pointer; border-radius:5px;">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 InvestSecureFinance. Tous droits réservés.</p>
+  </footer>
+
+  <!-- Modal simulation -->
+  <div id="modal">
+    <div id="modal-content">
+      <h3>Simulation de gains sur 6 mois</h3>
+      <p id="modal-text"></p>
+      <button id="modal-close">Fermer</button>
+    </div>
+  </div>
+
+  <script>
+    // Simulation de gains
+    const plans = {
+      basic: {amount: 1000, rate: 0.10},
+      standard: {amount: 3000, rate: 0.12},
+      premium: {amount: 5000, rate: 0.15}
+    };
+
+    document.querySelectorAll('.plan').forEach(planDiv => {
+      planDiv.addEventListener('click', () => {
+        const key = planDiv.dataset.plan;
+        const plan = plans[key];
+        let total = plan.amount;
+        // Calcul intérêt composé mensuel sur 6 mois
+        for(let i=0; i<6; i++) {
+          total += total * plan.rate;
+        }
+        total = total.toFixed(2);
+
+        document.getElementById('modal-text').textContent = `Si vous investissez ${plan.amount} €, au bout de 6 mois, votre capital pourrait atteindre environ ${total} €.`;
+        document.getElementById('modal').classList.add('active');
+      });
+    });
+
+    document.getElementById('modal-close').addEventListener('click', () => {
+      document.getElementById('modal').classList.remove('active');
+    });
+
+    // Formulaire contact - fausse soumission
+    document.getElementById('contactForm').addEventListener('submit', function(e){
+      e.preventDefault();
+      alert("Merci pour votre message. Notre équipe vous répondra sous 24h.");
+      this.reset();
+    });
+  </script>
+</body>
+</html>
